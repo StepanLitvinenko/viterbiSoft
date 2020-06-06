@@ -37,7 +37,7 @@ class ViterbiCodec {
 
   std::vector<uint16_t> Encode(std::vector<uint16_t> &bits) ;
 
-  std::string Decode(const std::string& bits);
+  std::vector<uint16_t> Decode(const std::vector<uint16_t> &bits);
 
   int constraint() const { return constraint_; }
 
@@ -67,19 +67,19 @@ std::vector< uint16_t> testVectorEncoded;
 
   std::vector<uint16_t> Output(int current_state, int input);
 
-  int BranchMetric(const std::string& bits,
+  int BranchMetric(const std::vector<uint16_t> &bits,
                    int source_state,
                    int target_state);
 
   // Given num_parity_bits() received bits, compute and returns path
   // metric and its corresponding previous state.
-  std::pair<int, int> PathMetric(const std::string& bits,
+  std::pair<int, int> PathMetric(const std::vector<uint16_t> &bits,
                                  const std::vector<int>& prev_path_metrics,
                                  int state);
 
   // Given num_parity_bits() received bits, update path metrics of all states
   // in the current iteration, and append new traceback vector to trellis.
-  void UpdatePathMetrics(const std::string& bits,
+  void UpdatePathMetrics(const std::vector<uint16_t> &bits,
                          std::vector<int>* path_metrics,
                          Trellis* trellis);
 

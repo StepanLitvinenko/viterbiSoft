@@ -27,7 +27,7 @@ int main()
     std::vector <int> poly;
     poly.push_back(5);poly.push_back(7);
 
-    std::vector <uint16_t> bits2Code {0, 1, 1};
+    std::vector <uint16_t> bits2Code {0, 1, 1, 0, 0, 1, 1, 1, 0, 1,1, 1, 0};
 
     ViterbiCodec Codec(3, poly);
 
@@ -45,11 +45,17 @@ int main()
     auto coded = Codec.Encode(bits2Code);
 
     //vector <int> myCoded{0,0,1,1,0,0,1,0,0,1,0,0};
+    //coded[5] = 5;
 
-  //  auto decoded = Codec.Decode(myCoded);
+    auto decoded = Codec.Decode(coded);
 
-    int stopDot;
-    std::cout<<stopDot;
+    vector <uint16_t> delta(decoded.size());
+
+    for (int i = 0; i < coded.size(); ++i) {
+        delta[i] = bits2Code[i] - decoded[i];    }
+
+    int stopDot= 0;
+    cout<<stopDot;
 
  return 0;
 }
