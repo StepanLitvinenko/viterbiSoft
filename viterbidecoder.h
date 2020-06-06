@@ -35,9 +35,9 @@ class ViterbiCodec {
   ViterbiCodec(int constraint, const std::vector<int>& polynomials);
 
 
-  std::string Encode(const std::string& bits) const;
+  std::vector<uint16_t> Encode(std::vector<uint16_t> &bits) ;
 
-  std::string Decode(const std::string& bits) const;
+  std::string Decode(const std::string& bits);
 
   int constraint() const { return constraint_; }
 
@@ -52,7 +52,11 @@ class ViterbiCodec {
   // the current state s in the ith iteration.
   // It is used for traceback.
 
-  std::vector<uint8_t> outputs_vector;
+  std::vector<std::vector<uint16_t>> outputs_vector;
+
+std::vector< uint16_t> testVectorEncoded;
+
+
   typedef std::vector<std::vector<int> > Trellis;
 
   int num_parity_bits() const;
@@ -61,23 +65,23 @@ class ViterbiCodec {
 
   int NextState(int current_state, int input) const;
 
-  std::string Output(int current_state, int input) const;
+  std::vector<uint16_t> Output(int current_state, int input);
 
   int BranchMetric(const std::string& bits,
                    int source_state,
-                   int target_state) const;
+                   int target_state);
 
   // Given num_parity_bits() received bits, compute and returns path
   // metric and its corresponding previous state.
   std::pair<int, int> PathMetric(const std::string& bits,
                                  const std::vector<int>& prev_path_metrics,
-                                 int state) const;
+                                 int state);
 
   // Given num_parity_bits() received bits, update path metrics of all states
   // in the current iteration, and append new traceback vector to trellis.
   void UpdatePathMetrics(const std::string& bits,
                          std::vector<int>* path_metrics,
-                         Trellis* trellis) const;
+                         Trellis* trellis);
 
   const int constraint_;
   const std::vector<int> polynomials_;
@@ -89,6 +93,7 @@ class ViterbiCodec {
   // 0b10 (= 2), and the current input is 0b1 (= 1), then the index is 0b110 (=
   // 6).
   std::vector<std::string> outputs_;
+
 };
 
 std::ostream& operator <<(std::ostream& os, const ViterbiCodec& codec);

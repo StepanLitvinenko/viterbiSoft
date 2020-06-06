@@ -5,8 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     viterbidecoder.cpp \
-#    mycoder.cpp
+    mycoder.cpp
 
 HEADERS += \
     viterbidecoder.h \
-#    mycoder.h
+    mycoder.h

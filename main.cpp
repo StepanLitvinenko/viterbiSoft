@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "viterbidecoder.h"
+
 #include <cstdlib>
+#include "viterbidecoder.h"
+#include "mycoder.h"
 using namespace std;
 
 int main()
@@ -10,24 +12,33 @@ int main()
 //    uint64_t a = 5;
 
 //    char b = 1<<a;
-
-
+   std::vector <string> polymy;
+   polymy.push_back("5");polymy.push_back("7");
    // int stopDot;
+
+
+//    MyCoder myCodec(polymy, 3);
+
+//    std::vector <uint16_t> codedData{1, 0, 0, 0, 1};
+
+
+//    myCodec.Encode(codedData);
+
     std::vector <int> poly;
     poly.push_back(5);poly.push_back(7);
 
-    //std::vector <int> bits2Code {0, 1, 1};
+    std::vector <uint16_t> bits2Code {0, 1, 1};
 
     ViterbiCodec Codec(3, poly);
 
 
-    string bits2Code = "01010";
+   // string bits2Code = "111";
 
     int a = 0;
 
-    a = 1<<3;
+    a = 4&1;
 
-
+    std::vector <uint16_t> encodedData;
 
 
 
@@ -38,6 +49,7 @@ int main()
   //  auto decoded = Codec.Decode(myCoded);
 
     int stopDot;
+    std::cout<<stopDot;
 
  return 0;
 }
