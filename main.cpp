@@ -1,61 +1,31 @@
 #include <iostream>
 #include <vector>
-
+#include <fstream>
 #include <cstdlib>
-#include "viterbidecoder.h"
-#include "mycoder.h"
+#include <cassert>
+#include "viterbiSoft/viterbidecoder.h"
+#include "filereader.h"
+#include <string>
 using namespace std;
 
 int main()
 {
+    std::string fileNameSource = "/home/stepan/viterbi_my/supportFiles/data.dat";
+    std::string fileNameCoded = "/home/stepan/viterbi_my/supportFiles/codedData.dat";
 
-//    uint64_t a = 5;
+    auto sourceData = ReadFile(fileNameSource);
+    auto encodedData = ReadFile(fileNameCoded);
 
-//    char b = 1<<a;
-   std::vector <string> polymy;
-   polymy.push_back("5");polymy.push_back("7");
-   // int stopDot;
+    int codeRestrict = 3;//кодовое ограничение, длина выходного слова на ед. меньше кодового ограничения
+    std::vector <int> poly {5, 7};//полиномы в шестнадцатиричной системе, необходимо чтобы совпадали с матлабом
 
+    ViterbiCodec Codec(codeRestrict, poly);
 
-//    MyCoder myCodec(polymy, 3);
+    auto decoded = Codec.Decode(encodedData);
 
-//    std::vector <uint16_t> codedData{1, 0, 0, 0, 1};
+    vector <int> delta(decoded.size());
 
-
-//    myCodec.Encode(codedData);
-
-    std::vector <int> poly;
-    poly.push_back(5);poly.push_back(7);
-
-    std::vector <uint16_t> bits2Code {0, 1, 1, 0, 0, 1, 1, 1, 0, 1,1, 1, 0};
-
-    ViterbiCodec Codec(3, poly);
-
-
-   // string bits2Code = "111";
-
-    int a = 0;
-
-    a = 4&1;
-
-    std::vector <uint16_t> encodedData;
-
-
-
-    auto coded = Codec.Encode(bits2Code);
-
-    //vector <int> myCoded{0,0,1,1,0,0,1,0,0,1,0,0};
-    //coded[5] = 5;
-
-    auto decoded = Codec.Decode(coded);
-
-    vector <uint16_t> delta(decoded.size());
-
-    for (int i = 0; i < coded.size(); ++i) {
-        delta[i] = bits2Code[i] - decoded[i];    }
-
-    int stopDot= 0;
-    cout<<stopDot;
-
- return 0;
+    for (int i = 0; i < sourceData.size(); ++i) delta[i] = sourceData[i] - decoded[i];/*вектор
+                                                                              с неисправлеными ошибками*/
+    return 0;
 }

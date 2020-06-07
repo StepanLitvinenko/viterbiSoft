@@ -4,9 +4,10 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    viterbidecoder.cpp \
-    mycoder.cpp
+    viterbiSoft/viterbidecoder.cpp \
+   # mycoder.cpp
 
 HEADERS += \
-    viterbidecoder.h \
-    mycoder.h
+    viterbiSoft/viterbidecoder.h \
+   # mycoder.h
+    filereader.h
