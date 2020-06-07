@@ -8,17 +8,17 @@
 
 
 
-inline std::vector <float> ReadFile (std::string fileName){
+inline std::vector <uint8_t> ReadFile (std::string fileName){
 
     std::ifstream in( fileName, std::ifstream::binary );
 
     assert( in.is_open( ) );
     in.seekg( 0, in.end );
-    int32_t actualLength = in.tellg( ) / sizeof( float);
+    int32_t actualLength = in.tellg( ) / sizeof( uint8_t);
     in.seekg( 0, in.beg );
 
-    std::vector <float> dataRead(actualLength);
-    in.read( reinterpret_cast<char*>(dataRead.data()), actualLength*sizeof(float));
+    std::vector <uint8_t> dataRead(actualLength);
+    in.read( reinterpret_cast<char*>(dataRead.data()), actualLength*sizeof(uint8_t));
 
     return dataRead;
 

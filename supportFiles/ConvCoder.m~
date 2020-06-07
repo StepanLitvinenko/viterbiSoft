@@ -17,13 +17,13 @@ codedData = convenc(data,trellis);
 len = length(codedData);
 
 noise = wgn(1,len,0.001);
-% codedData = codedData*2 - 1;
+codedData = codedData*2 - 1;
 codDatNoise = addAWGN(codedData, 2);
 codedDatNoise = codedData+noise;
 
 % savedData = data(1:end-2);
 
-fwrite(fid, codedData, 'int8');
+fwrite(fid, abscodDatNoise, 'int8');
 fwrite(f2id, data, 'int8'); 
 
 fclose(fid); 

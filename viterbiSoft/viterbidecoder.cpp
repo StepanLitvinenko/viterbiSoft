@@ -92,7 +92,7 @@ void ViterbiCodec::InitializeOutputs() {
     }
 }
 
-float ViterbiCodec::BranchMetric(const std::vector <float>& bits,
+float ViterbiCodec::BranchMetric(const std::vector <uint8_t>& bits,
                                int source_state,
                                int target_state)  {
     assert(bits.size() == num_parity_bits());
@@ -102,7 +102,7 @@ float ViterbiCodec::BranchMetric(const std::vector <float>& bits,
    }
 
 std::pair<float, int> ViterbiCodec::PathMetric(
-        const std::vector <float>& bits,
+        const std::vector <uint8_t>& bits,
         const std::vector<float>& prev_path_metrics,
         int state)  {
     int s = (state & ((1 << (constraint_ - 2)) - 1)) << 1;
@@ -125,7 +125,7 @@ std::pair<float, int> ViterbiCodec::PathMetric(
     }
 }
 
-void ViterbiCodec::UpdatePathMetrics(const std::vector <float>& bits,
+void ViterbiCodec::UpdatePathMetrics(const std::vector <uint8_t>& bits,
                                      std::vector<float>* path_metrics,
                                      Trellis* trellis)  {
     std::vector<float> new_path_metrics(path_metrics->size());
@@ -140,11 +140,11 @@ void ViterbiCodec::UpdatePathMetrics(const std::vector <float>& bits,
     trellis->push_back(new_trellis_column);
 }
 
-float ViterbiCodec::EuclidDistance(const std::vector<float> &x, const std::vector<uint16_t> &y)
+float ViterbiCodec::EuclidDistance(const std::vector<uint8_t> &x, const std::vector<uint16_t> &y)
 {
         assert(x.size() == y.size());
         float distance = 0;
-        float yFloat;
+        uint8_t yFloat;
         for (size_t i = 0; i < x.size(); i++) {
             yFloat = y[i];
             distance += pow(yFloat - x[i],2);
@@ -154,7 +154,7 @@ float ViterbiCodec::EuclidDistance(const std::vector<float> &x, const std::vecto
 
 }
 
-std::vector <uint16_t> ViterbiCodec::Decode(const std::vector <float>& bits)  {
+std::vector <uint16_t> ViterbiCodec::Decode(const std::vector <uint8_t>& bits)  {
     // Compute path metrics and generate trellis.
     Trellis trellis;
     std::vector<float> path_metrics(1 << (constraint_ - 1),
@@ -162,7 +162,7 @@ std::vector <uint16_t> ViterbiCodec::Decode(const std::vector <float>& bits)  {
     path_metrics.front() = 0;
     for (int i = 0; i < static_cast<int>(bits.size()); i += num_parity_bits()) {
 
-        std::vector <float> current_bits;
+        std::vector <uint8_t> current_bits;
         if (i<=(bits.size()-num_parity_bits()))
            std::copy(bits.begin() + i, bits.begin() + i + num_parity_bits(), back_inserter(current_bits));
         else {

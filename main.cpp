@@ -21,6 +21,12 @@ int main()
 
     ViterbiCodec Codec(codeRestrict, poly);
 
+    encodedData[5] = 5;
+    encodedData[11] = 3;
+    encodedData[15] = 0;
+    encodedData[30] = 1;
+     encodedData[35] = 2;
+
     auto decoded = Codec.Decode(encodedData);
 
     vector <int> delta(decoded.size());

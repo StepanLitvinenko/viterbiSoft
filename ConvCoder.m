@@ -19,7 +19,7 @@ codDatNoise = addAWGN(codedData, 2);
 codedDatNoise = codedData+noise;
 
 fwrite(fid, codDatNoise, 'float32');
-fwrite(f2id, data, 'float32'); 
+fwrite(f2id, data, 'int8'); 
 
 fclose(fid); 
 fclose(f2id);

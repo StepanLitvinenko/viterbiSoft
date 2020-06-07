@@ -37,7 +37,7 @@ public:
 
     std::vector<uint16_t> Encode(std::vector<uint16_t> &bits) ;
 
-    std::vector<uint16_t> Decode(const std::vector<float> &bits);
+    std::vector<uint16_t> Decode(const std::vector<uint8_t> &bits);
 
     int constraint() const { return constraint_; }
 
@@ -65,25 +65,25 @@ private:
 
     std::vector<uint16_t> Output(int current_state, int input);
 
-    float BranchMetric(const std::vector<float> &bits,
+    float BranchMetric(const std::vector<uint8_t> &bits,
                      int source_state,
                      int target_state);
 
     // Given num_parity_bits() received bits, compute and returns path
     // metric and its corresponding previous state.
-    std::pair<float, int> PathMetric(const std::vector<float> &bits,
+    std::pair<float, int> PathMetric(const std::vector<uint8_t> &bits,
                                    const std::vector<float> &prev_path_metrics,
                                    int state);
 
     // Given num_parity_bits() received bits, update path metrics of all states
     // in the current iteration, and append new traceback vector to trellis.
-    void UpdatePathMetrics(const std::vector<float> &bits,
+    void UpdatePathMetrics(const std::vector<uint8_t> &bits,
                            std::vector<float> *path_metrics,
                            Trellis* trellis);
 
     const int constraint_;
     const std::vector<int> polynomials_;
-    float EuclidDistance(const std::vector<float> &x, const std::vector <uint16_t>& y);
+    float EuclidDistance(const std::vector<uint8_t> &x, const std::vector <uint16_t>& y);
     // The output table.
     // The index is current input bit combined with previous inputs in the shift
     // register. The value is the output parity bits in string format for
